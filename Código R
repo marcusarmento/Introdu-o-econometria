@@ -20,7 +20,7 @@ attach(base_de_dados)
 
 # Separamos as variáveis explicativas com a função cbind, acrescentando
 # uma coluna com a constante
-X <- cbind(1, Base.monetária, Salário.mínimo.real, Câmbio.contratado)
+X <- cbind(1, `Base monetária`, `Salário mínimo real`, `Câmbio contratado`)
 
 # Fazemos o mesmo com a variáveis explicada
 y <- cbind(bens.de.consumo.duráveis)
