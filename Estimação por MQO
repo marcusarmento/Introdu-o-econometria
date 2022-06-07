@@ -23,7 +23,7 @@ attach(base_de_dados)
 X <- cbind(1, `Base monetária`, `Salário mínimo real`, `Câmbio contratado`)
 
 # Fazemos o mesmo com a variáveis explicada
-y <- cbind(bens.de.consumo.duráveis)
+y <- cbind(`bens de consumo duráveis`)
 
 #####
 # Forma matricial do (MQO)
