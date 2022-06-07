@@ -73,8 +73,8 @@ betas
 
 # Para comprovar que os resultados estão corretos, chamamos a função lm que
 # estima por MQO a relação que fizemos passo a passo, anteriormente
-modelo <- lm(bens.de.consumo.duráveis ~ Base.monetária + Salário.mínimo.real + 
-               Câmbio.contratado)
+modelo <- lm(`bens de consumo duráveis` ~ `Salário mínimo real` + 
+               `Câmbio contratado` + `Base monetária`)
 
 # Esse é o resultado que obtemos e verificamos que o resultado é idêntico
 summary(modelo)
