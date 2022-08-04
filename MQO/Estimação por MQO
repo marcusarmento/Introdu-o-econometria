@@ -1,0 +1,80 @@
+# Estimando os betas de uma regressão (MQO), versão matricial
+# A base de dados foi coletada no IPEAData
+# O y é o consumo de bens duráveis
+# o x é o salário mínimo real, câmbio contratado e a base monetária
+
+##### 
+# Tratamento de dados 
+
+
+# Importamos a base de dados que está em xls
+library(readxl)
+base_de_dados <- read_excel("C:/Users/FINANCA33/Downloads/base de dados.xls")
+
+# Como baixamos a série completa, retiramos os valores missing
+base_de_dados = na.omit(base_de_dados)
+
+# Usamos o attach para acessar as variáveis na base de dados sem ter que 
+# chamar a estrutura dos dados a serem acessadas
+attach(base_de_dados)
+
+# Separamos as variáveis explicativas com a função cbind, acrescentando
+# uma coluna com a constante
+X <- cbind(1, `Base monetária`, `Salário mínimo real`, `Câmbio contratado`)
+
+# Fazemos o mesmo com a variáveis explicada
+y <- cbind(`bens de consumo duráveis`)
+
+#####
+# Forma matricial do (MQO)
+
+# Em sua forma matricial, temos que ((X'X)^-1)*(X'y)
+# O produto da matriz transposta de X e a matriz X e depois a inverte
+# O produto da matriz transposta de X e o vetor y
+# O produto dos resultados acima são os estimadores Betas
+
+# Primeiro fazemos a transposta de X
+trX <- (t(X))
+
+# Depois fazemos o produto da transposta de X com a matriz X
+# Para efetuar o produto de matrizes, utilizamos o operador %*%
+XX <- trX %*% X
+
+# Aqui podemos verificar qual o resultado
+XX
+
+# Aqui podemos ver qual é o determinante do produto acima para verificar se
+# a matriz é inversível. O determinante deve ser diferente de zero
+det(XX)
+
+# Para fazer a inversa de uma matriz chamamos o pacote MASS e utilizamos a 
+# função ginv
+library(MASS)
+
+invXX <- (ginv(XX))
+invXX
+
+# Agora iremos para o outro lado do produto, que é a transposta de X e o vetor
+# de y
+Xy <- trX %*% y
+
+# Aqui podemos verificar qual o resultado
+Xy
+
+
+#####
+
+# Por fim, o produto final para ser possível estimar os Betas
+betas <- invXX %*% Xy
+
+# Esse é o resultado final
+betas
+
+
+# Para comprovar que os resultados estão corretos, chamamos a função lm que
+# estima por MQO a relação que fizemos passo a passo, anteriormente
+modelo <- lm(`bens de consumo duráveis` ~ `Salário mínimo real` + 
+               `Câmbio contratado` + `Base monetária`)
+
+# Esse é o resultado que obtemos e verificamos que o resultado é idêntico
+summary(modelo)
